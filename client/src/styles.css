@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  background-color: #F7E6E6;
+}
+.app-container {
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.main-card {
+  background: #FFF8F3;
+  padding: 20px;
+  border-radius: 24px;
+  max-width: 400px;
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  background: white;
+  font-size: 16px;
+}
+
+.primary-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 16px;
+  background: #FADADD;
+  color: #5C4033;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.expense-card {
+  background: #FFF8F3;
+  padding: 16px;
+  border-radius: 18px;
+  margin-top: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  color: #5C4033;
+  margin-bottom: 10px;
+}
+
+.page-title {
+  color: #5C4033;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.mobile-frame {
+  max-width: 430px;
+  margin: auto;
+}
+
+.subtitle {
+  color: #8B6B61;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.total-card {
+  background: linear-gradient(
+    135deg,
+    #FADADD,
+    #FFF8F3
+  );
+
+  padding: 20px;
+  border-radius: 24px;
+  margin-top: 20px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.total-amount {
+  font-size: 32px;
+  font-weight: 800;
+  color: #5C4033;
+  margin-top: 8px;
+}
+
+.category-text {
+  color: #8B6B61;
+  font-size: 14px;
+}
+
+.delete-button {
+  background: #FFD6D6;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #5C4033;
+  font-weight: 700;
+}
