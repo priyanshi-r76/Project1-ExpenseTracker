@@ -1,3 +1,4 @@
+import BottomNav from "./components/BottomNav";
 import { useState } from "react";
 
 function App() {
@@ -70,8 +71,9 @@ function App() {
           onChange={(e) => setCategory(e.target.value)}
           className="input-field"
         >
-          <option>Food</option>
+          <option>Choose Category</option>
           <option>Travel</option>
+          <option>Food</option>
           <option>Shopping</option>
           <option>Entertainment</option>
         </select>
@@ -135,6 +137,7 @@ function App() {
         ))}
       </div>
       </div>
+      <BottomNav />
     </div>
   );
 }
