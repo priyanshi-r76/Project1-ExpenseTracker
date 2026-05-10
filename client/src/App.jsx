@@ -25,7 +25,7 @@ function App() {
 
     setTitle("");
     setAmount("");
-    setCategory("Food");
+    setCategory("");
   };
 
   const deleteExpense = (id) => {
@@ -71,7 +71,10 @@ function App() {
           onChange={(e) => setCategory(e.target.value)}
           className="input-field"
         >
-          <option>Choose Category</option>
+          <option value="" disabled>
+            Choose Category
+          </option>
+
           <option>Travel</option>
           <option>Food</option>
           <option>Shopping</option>
