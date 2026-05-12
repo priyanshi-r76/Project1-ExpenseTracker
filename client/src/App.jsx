@@ -1,14 +1,90 @@
 import BottomNav from "./components/BottomNav";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import Home from "./pages/Home";
+import Analytics from "./pages/Analytics";
+import Profile from "./pages/Profile";
+import Reports from "./pages/Reports";
+import Onboarding from "./pages/Onboarding";
+
+import {
+  motion,
+  AnimatePresence,
+} from "framer-motion";
 
 function App() {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("Food");
 
-  const [expenses, setExpenses] = useState([]);
+  const [activePage, setActivePage] =
+    useState("onboarding");
+
+  const [title, setTitle] =
+    useState("");
+
+  const [amount, setAmount] =
+    useState("");
+
+  const [category, setCategory] =
+    useState("");
+
+  const [expenses, setExpenses] =
+    useState(() => {
+
+      const savedExpenses =
+        localStorage.getItem("expenses");
+
+      return savedExpenses
+        ? JSON.parse(savedExpenses)
+        : [];
+
+    });
+
+  const [profileName, setProfileName] =
+    useState(() => {
+
+      return (
+        localStorage.getItem(
+          "profileName"
+        ) || "Priyanshi"
+      );
+
+    });
+
+  const [profileBio, setProfileBio] =
+    useState(() => {
+
+      return (
+        localStorage.getItem(
+          "profileBio"
+        ) || "smart money tracker"
+      );
+
+    });
+
+  useEffect(() => {
+
+    localStorage.setItem(
+      "expenses",
+      JSON.stringify(expenses)
+    );
+
+  }, [expenses]);
+
+  useEffect(() => {
+
+    localStorage.setItem(
+      "profileName",
+      profileName
+    );
+
+    localStorage.setItem(
+      "profileBio",
+      profileBio
+    );
+
+  }, [profileName, profileBio]);
 
   const addExpense = () => {
+
     if (!title || !amount) {
       alert("Please fill all fields");
       return;
@@ -19,9 +95,13 @@ function App() {
       title,
       amount: Number(amount),
       category,
+      date: new Date(),
     };
 
-    setExpenses([...expenses, newExpense]);
+    setExpenses([
+      ...expenses,
+      newExpense,
+    ]);
 
     setTitle("");
     setAmount("");
@@ -29,119 +109,221 @@ function App() {
   };
 
   const deleteExpense = (id) => {
-    const updatedExpenses = expenses.filter(
-      (expense) => expense.id !== id
-    );
+
+    const updatedExpenses =
+      expenses.filter(
+        (expense) =>
+          expense.id !== id
+      );
 
     setExpenses(updatedExpenses);
   };
 
-  const totalSpending = expenses.reduce(
-    (total, expense) => total + expense.amount,
-    0
-  );
+  const totalSpending =
+    expenses.reduce(
+      (total, expense) =>
+        total + expense.amount,
+      0
+    );
 
   return (
-    <div className="app-container">
-      <div className="mobile-frame">
-      <h1 className="page-title">MOMO</h1>
-      <p className="subtitle">your smart money buddy </p>
 
-      <div className="main-card">
-        <h2>Add Expense</h2>
+    <div className="phone-container">
 
-        <input
-          type="text"
-          placeholder="Expense Name"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="input-field"
-        />
+      <AnimatePresence mode="wait">
 
-        <input
-          type="number"
-          placeholder="Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="input-field"
-        />
+        {activePage === "onboarding" && (
 
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="input-field"
-        >
-          <option value="" disabled>
-            Choose Category
-          </option>
-
-          <option>Travel</option>
-          <option>Food</option>
-          <option>Shopping</option>
-          <option>Entertainment</option>
-        </select>
-
-        <button
-          onClick={addExpense}
-          className="primary-button"
-        >
-          Add Expense
-        </button>
-      </div>
-
-      <div className="total-card">
-        <p className="category-text">
-          Total Spending
-        </p>
-
-        <h2 className="total-amount">
-          ₹{totalSpending}
-        </h2>
-      </div>
-
-      <div style={{ marginTop: "30px", maxWidth: "400px" }}>
-        <h2>Expenses</h2>
-
-        {expenses.map((expense) => (
-          <div
-            key={expense.id}
-            className="expense-card"
+          <motion.div
+            key="onboarding"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -20,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <span>{expense.title}</span>
-              <span>₹{expense.amount}</span>
-            </div>
 
-            <div
-              style={{
-                marginTop: "8px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <small className="category-text">
-                {expense.category}
-              </small>
+            <Onboarding
+              setActivePage={
+                setActivePage
+              }
+            />
 
-              <button
-                onClick={() => deleteExpense(expense.id)}
-                className="delete-button"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      </div>
-      <BottomNav />
+          </motion.div>
+
+        )}
+
+        {activePage === "home" && (
+
+          <motion.div
+            key="home"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -20,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+
+            <Home
+              title={title}
+              setTitle={setTitle}
+
+              amount={amount}
+              setAmount={setAmount}
+
+              category={category}
+              setCategory={setCategory}
+
+              addExpense={addExpense}
+
+              expenses={expenses}
+
+              totalSpending={
+                totalSpending
+              }
+
+              deleteExpense={
+                deleteExpense
+              }
+            />
+
+          </motion.div>
+
+        )}
+
+        {activePage === "analytics" && (
+
+          <motion.div
+            key="analytics"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -20,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+
+            <Analytics
+              expenses={expenses}
+            />
+
+          </motion.div>
+
+        )}
+
+        {activePage === "reports" && (
+
+          <motion.div
+            key="reports"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -20,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+
+            <Reports
+              expenses={expenses}
+            />
+
+          </motion.div>
+
+        )}
+
+        {activePage === "profile" && (
+
+          <motion.div
+            key="profile"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -20,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+
+            <Profile
+              profileName={
+                profileName
+              }
+
+              setProfileName={
+                setProfileName
+              }
+
+              profileBio={
+                profileBio
+              }
+
+              setProfileBio={
+                setProfileBio
+              }
+            />
+
+          </motion.div>
+
+        )}
+
+      </AnimatePresence>
+
+      <BottomNav
+        setActivePage={
+          setActivePage
+        }
+
+        activePage={activePage}
+      />
+
     </div>
+
   );
 }
 
