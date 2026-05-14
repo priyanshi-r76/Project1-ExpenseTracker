@@ -68,81 +68,30 @@ function Home({
 
       </div>
 
-      <div className="categories-row">
+      {Object.keys(categoryCounts)
+        .length > 0 && (
+          <div className="categories-row">
 
-        {Object.entries(categoryCounts)
-          .map(([category, count]) => (
+            {Object.entries(categoryCounts)
+              .map(([category, count]) => (
 
-            <div
-              className="category-card"
-              key={category}
-            >
+                <div
+                  className="category-card"
+                  key={category}
+                >
 
-              <h3>{category}</h3>
+                  <h3>{category}</h3>
 
-              <p>
-                {count} Expenses
-              </p>
+                  <p>
+                    {count} Expenses
+                  </p>
 
-            </div>
+                </div>
 
-        ))}
+              ))}
 
-      </div>
-
-      <div className="main-card">
-
-        <h2 className="section-title">
-          Add Expense
-        </h2>
-
-        <input
-          type="text"
-          placeholder="Expense Name"
-          className="input-field"
-          value={title}
-          onChange={(e) =>
-            setTitle(e.target.value)
-          }
-        />
-
-        <input
-          type="number"
-          placeholder="Amount"
-          className="input-field"
-          value={amount}
-          onChange={(e) =>
-            setAmount(e.target.value)
-          }
-        />
-
-        <select
-          className="input-field"
-          value={category}
-          onChange={(e) =>
-            setCategory(e.target.value)
-          }
-        >
-
-          <option value="" disabled>
-            Choose Category
-          </option>
-
-          <option>Food</option>
-          <option>Travel</option>
-          <option>Shopping</option>
-          <option>Entertainment</option>
-
-        </select>
-
-        <button
-          className="primary-button"
-          onClick={addExpense}
-        >
-          Add Expense
-        </button>
-
-      </div>
+          </div>
+        )}
 
       <div className="total-card">
 
@@ -155,6 +104,17 @@ function Home({
         </h2>
 
       </div>
+
+      <h2
+        className="section-title"
+
+        style={{
+          marginTop: "28px",
+          marginBottom: "14px",
+        }}
+      >
+        Recent Expenses
+      </h2>
 
       <div style={{ marginTop: "20px" }}>
 

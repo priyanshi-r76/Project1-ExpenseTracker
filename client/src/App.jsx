@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
 import Reports from "./pages/Reports";
+import AddExpense from "./pages/AddExpense";
 import Onboarding from "./pages/Onboarding";
 
 import {
@@ -14,29 +15,23 @@ import {
 
 function App() {
 
-  const [activePage, setActivePage] =
-    useState("onboarding");
+  const [activePage, setActivePage] = useState("onboarding");
 
-  const [title, setTitle] =
-    useState("");
+  const [title, setTitle] = useState("");
 
-  const [amount, setAmount] =
-    useState("");
+  const [amount, setAmount] = useState("");
 
-  const [category, setCategory] =
-    useState("");
+  const [category, setCategory] = useState("");
 
-  const [expenses, setExpenses] =
-    useState(() => {
+  const [expenses, setExpenses] = useState(() => {
 
-      const savedExpenses =
-        localStorage.getItem("expenses");
+    const savedExpenses = localStorage.getItem("expenses");
 
-      return savedExpenses
-        ? JSON.parse(savedExpenses)
-        : [];
+    return savedExpenses
+      ? JSON.parse(savedExpenses)
+      : [];
 
-    });
+  });
 
   const [profileName, setProfileName] =
     useState(() => {
@@ -57,6 +52,62 @@ function App() {
           "profileBio"
         ) || "smart money tracker"
       );
+
+    });
+
+  const [profileEmail, setProfileEmail] =
+    useState(() => {
+
+      return (
+        localStorage.getItem(
+          "profileEmail"
+        ) || "priyanshi@email.com"
+      );
+
+    });
+
+  const [profilePhone, setProfilePhone] =
+    useState(() => {
+
+      return (
+        localStorage.getItem(
+          "profilePhone"
+        ) || "+91 9876543210"
+      );
+
+    });
+
+  const [profileImage, setProfileImage] =
+    useState(() => {
+
+      return (
+        localStorage.getItem(
+          "profileImage"
+        ) || ""
+      );
+
+    });
+
+  const [darkMode, setDarkMode] =
+    useState(() => {
+
+      return JSON.parse(
+        localStorage.getItem(
+          "darkMode"
+        )
+      ) || false;
+
+    });
+
+  const [notificationsEnabled,
+    setNotificationsEnabled] =
+    useState(() => {
+
+      return JSON.parse(
+        localStorage.getItem(
+          "notificationsEnabled"
+        )
+      ) || true;
 
     });
 
@@ -81,7 +132,42 @@ function App() {
       profileBio
     );
 
-  }, [profileName, profileBio]);
+    localStorage.setItem(
+      "profileEmail",
+      profileEmail
+    );
+
+    localStorage.setItem(
+      "profilePhone",
+      profilePhone
+    );
+
+    localStorage.setItem(
+      "profileImage",
+      profileImage
+    );
+
+    localStorage.setItem(
+      "darkMode",
+      JSON.stringify(darkMode)
+    );
+
+    localStorage.setItem(
+      "notificationsEnabled",
+      JSON.stringify(
+        notificationsEnabled
+      )
+    );
+
+  }, [
+    profileName,
+    profileBio,
+    profileEmail,
+    profilePhone,
+    profileImage,
+    darkMode,
+    notificationsEnabled
+  ]);
 
   const addExpense = () => {
 
@@ -125,6 +211,29 @@ function App() {
         total + expense.amount,
       0
     );
+
+  const profileData = {
+    profileName,
+    setProfileName,
+
+    profileBio,
+    setProfileBio,
+
+    profileEmail,
+    setProfileEmail,
+
+    profilePhone,
+    setProfilePhone,
+
+    profileImage,
+    setProfileImage,
+
+    darkMode,
+    setDarkMode,
+
+    notificationsEnabled,
+    setNotificationsEnabled,
+  };
 
   return (
 
@@ -269,6 +378,50 @@ function App() {
 
         )}
 
+        {activePage === "addExpense" && (
+
+          <motion.div
+            key="addExpense"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -20,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+
+            <AddExpense
+
+              title={title}
+              setTitle={setTitle}
+
+              amount={amount}
+              setAmount={setAmount}
+
+              category={category}
+              setCategory={setCategory}
+
+              addExpense={addExpense}
+
+              setActivePage={
+                setActivePage
+              }
+
+            />
+
+          </motion.div>
+
+        )}
+
         {activePage === "profile" && (
 
           <motion.div
@@ -291,21 +444,7 @@ function App() {
           >
 
             <Profile
-              profileName={
-                profileName
-              }
-
-              setProfileName={
-                setProfileName
-              }
-
-              profileBio={
-                profileBio
-              }
-
-              setProfileBio={
-                setProfileBio
-              }
+              profileData={profileData}
             />
 
           </motion.div>

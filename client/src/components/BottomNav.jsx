@@ -8,8 +8,8 @@ function BottomNav({
         onClick={() => setActivePage("home")}
         className={
           activePage === "home"
-          ? "nav-active"
-          : ""
+            ? "nav-active"
+            : ""
         }
       >
         <span>🏠</span>
@@ -28,7 +28,15 @@ function BottomNav({
         <p>Stats</p>
       </button>
 
-      <button className="add-button">
+      <button
+        className="add-button"
+
+        onClick={() =>
+          setActivePage(
+            "addExpense"
+          )
+        }
+      >
         ＋
       </button>
 
@@ -36,8 +44,8 @@ function BottomNav({
         onClick={() => setActivePage("reports")}
         className={
           activePage === "reports"
-          ? "nav-active"
-          : ""
+            ? "nav-active"
+            : ""
         }
       >
         <span>📄</span>
@@ -48,8 +56,8 @@ function BottomNav({
         onClick={() => setActivePage("profile")}
         className={
           activePage === "profile"
-          ? "nav-active"
-          : ""
+            ? "nav-active"
+            : ""
         }
       >
         <span>👤</span>
